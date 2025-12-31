@@ -11,40 +11,12 @@ st.set_page_config(
 )
 
 # ----------------------------
-# PASSWORD PROTECTION
-# ----------------------------
-# IMPORTANT:
-# Use Streamlit Secrets for security (recommended)
-# In Streamlit Cloud → App Settings → Secrets:
-# APP_PASSWORD = "yourStrongPassword"
-
-PASSWORD = st.secrets["APP_PASSWORD"]
-
-def check_password():
-    if "authenticated" not in st.session_state:
-        st.session_state.authenticated = False
-
-    if not st.session_state.authenticated:
-        st.title("🔒 Private Access")
-        password_input = st.text_input("Enter password", type="password")
-
-        if password_input == PASSWORD:
-            st.session_state.authenticated = True
-            st.rerun()
-        elif password_input:
-            st.error("Incorrect password")
-
-        st.stop()
-
-check_password()
-
-# ----------------------------
 # APP CONTENT
 # ----------------------------
 st.title("⚽ xPoints Calculator (Poisson Model)")
-
 st.markdown("Enter expected goals (xG) for each team.")
 
+# Input expected goals
 team_a_xg = st.number_input(
     "Team A xG",
     min_value=0.0,
@@ -59,6 +31,7 @@ team_b_xg = st.number_input(
     value=1.82
 )
 
+# Calculate button
 if st.button("Calculate xPoints"):
 
     # Goal probability distributions
@@ -77,7 +50,7 @@ if st.button("Calculate xPoints"):
     xPoints_a = p_win_a * 3 + p_draw
     xPoints_b = p_win_b * 3 + p_draw
 
-    # Output
+    # Output results
     st.subheader("📊 Results")
     st.write(f"**Team A Win %:** {p_win_a * 100:.2f}%")
     st.write(f"**Draw %:** {p_draw * 100:.2f}%")
