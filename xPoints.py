@@ -2,34 +2,14 @@ import streamlit as st
 import numpy as np
 from scipy.stats import poisson
 
-# ----------------------------
-# PAGE CONFIG
-# ----------------------------
-st.set_page_config(
-    page_title="xPoints Calculator",
-    layout="centered"
-)
+# Page config
+st.set_page_config(page_title="xPoints Calculator", layout="centered")
 
-# ----------------------------
-# APP CONTENT
-# ----------------------------
-st.title("⚽ xPoints Calculator (Poisson Model)")
-st.markdown("Enter expected goals (xG) for each team.")
+st.title("⚽ xPoints Calculator")
 
 # Input expected goals
-team_a_xg = st.number_input(
-    "Team A xG",
-    min_value=0.0,
-    step=0.01,
-    value=0.47
-)
-
-team_b_xg = st.number_input(
-    "Team B xG",
-    min_value=0.0,
-    step=0.01,
-    value=1.82
-)
+team_a_xg = st.number_input("Team A xG", min_value=0.0, step=0.01, value=0.47)
+team_b_xg = st.number_input("Team B xG", min_value=0.0, step=0.01, value=1.82)
 
 # Calculate button
 if st.button("Calculate xPoints"):
@@ -51,10 +31,5 @@ if st.button("Calculate xPoints"):
     xPoints_b = p_win_b * 3 + p_draw
 
     # Output results
-    st.subheader("📊 Results")
-    st.write(f"**Team A Win %:** {p_win_a * 100:.2f}%")
-    st.write(f"**Draw %:** {p_draw * 100:.2f}%")
-    st.write(f"**Team B Win %:** {p_win_b * 100:.2f}%")
-
     st.success(f"Team A xPoints: {xPoints_a:.3f}")
     st.success(f"Team B xPoints: {xPoints_b:.3f}")
